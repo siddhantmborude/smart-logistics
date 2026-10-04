@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Logistics Route Optimization</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #1f2937;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: auto;
+            padding: 30px 0;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 34px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #6b7280;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 22px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, .08);
+        }
+
+        .card h2 {
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            font-size: 15px;
+            background: white;
+        }
+
+        /* Destination section */
+        #destination-container {
+            margin-top: 0;
+        }
+
+        .locations {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .location {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px;
+            background: #f9fafb;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .location input {
+            width: 17px;
+            height: 17px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            border-radius: 7px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        button:disabled {
+            background: #9ca3af;
+        }
+
+        .error {
+            margin-top: 15px;
+            padding: 12px;
+            background: #fee2e2;
+            color: #991b1b;
+            border-radius: 7px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .stat {
+            padding: 18px;
+            background: #f3f4f6;
+            border-radius: 8px;
+        }
+
+        .stat strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .route {
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 8px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .route-node {
+            font-weight: bold;
+        }
+
+        .arrow {
+            margin: 0 8px;
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 18px;
+        }
+
+        .concept {
+            padding: 18px;
+            background: #f9fafb;
+            border-radius: 8px;
+        }
+
+        .concept h3 {
+            margin-top: 0;
+        }
+
+        .loading {
+            color: #6b7280;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <header class="header">
+        <h1>Smart Logistics</h1>
+        <p>Route Optimization using DAA Algorithms</p>
+    </header>
+
+
+    <!-- ROUTE CONFIGURATION -->
+    <section class="card">
+
+        <h2>Route Configuration</h2>
+
+        <!-- Starting Location -->
+        <label for="startLocation">
+            Starting Location
+        </label>
+
+        <select id="startLocation">
+            <option value="">Loading locations...</option>
+        </select>
+
+
+        <!-- Algorithm -->
+        <label for="algorithm">
+            Algorithm
+        </label>
+
+        <select id="algorithm">
+
+            <option value="branch-bound">
+                Branch & Bound — Optimal TSP
+            </option>
+
+            <option value="greedy">
+                Greedy — Nearest Neighbor
+            </option>
+
+            <option value="dijkstra">
+                Dijkstra — Shortest Path
+            </option>
+
+        </select>
+
+
+        <!-- Dijkstra Destination -->
+        <div id="destination-container" style="display: none;">
+
+            <label for="destinationLocation">
+                Destination Location
+            </label>
+
+            <select id="destinationLocation">
+                <option value="">
+                    Select destination
+                </option>
+            </select>
+
+        </div>
+
+
+        <!-- Delivery Locations -->
+        <label>
+            Delivery Locations
+        </label>
+
+        <div id="locations" class="locations">
+
+            <div class="loading">
+                Loading locations...
+            </div>
+
+        </div>
+
+
+        <!-- Calculate -->
+        <button id="calculateBtn">
+            Calculate Route
+        </button>
+
+
+        <!-- Error -->
+        <div id="error"
+             class="error"
+             style="display:none;">
+        </div>
+
+    </section>
+
+
+    <!-- RESULT -->
+    <section id="resultCard"
+             class="card"
+             style="display:none;">
+
+        <h2>Optimization Result</h2>
+
+        <div class="stats">
+
+            <div class="stat">
+                <strong>Algorithm</strong>
+                <span id="resultAlgorithm">-</span>
+            </div>
+
+            <div class="stat">
+                <strong>Total Distance</strong>
+                <span id="resultDistance">-</span>
+            </div>
+
+            <div class="stat">
+                <strong>Execution Time</strong>
+                <span id="resultTime">-</span>
+            </div>
+
+            <div class="stat">
+                <strong>Nodes Explored</strong>
+                <span id="resultNodes">-</span>
+            </div>
+
+        </div>
+
+
+        <h3>Route</h3>
+
+        <div id="resultRoute"
+             class="route">
+        </div>
+
+    </section>
+
+
+    <!-- DAA CONCEPTS -->
+    <section class="card">
+
+        <h2>DAA Concepts Used</h2>
+
+        <div class="concept-grid">
+
+            <div class="concept">
+
+                <h3>Branch & Bound</h3>
+
+                <p>
+                    Finds an optimal TSP route by exploring possible
+                    routes and pruning branches that cannot produce
+                    a better solution.
+                </p>
+
+            </div>
+
+
+            <div class="concept">
+
+                <h3>Greedy</h3>
+
+                <p>
+                    Selects the nearest unvisited location at every
+                    step to quickly construct an approximate route.
+                </p>
+
+            </div>
+
+
+            <div class="concept">
+
+                <h3>Dijkstra</h3>
+
+                <p>
+                    Finds the shortest path between two locations
+                    in a weighted logistics graph.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<script src="app.js"></script>
+
+</body>
+</html>

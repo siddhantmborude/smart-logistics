@@ -1,0 +1,161 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    color: #1f2937;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: auto;
+    padding: 30px 0;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.header h1 {
+    margin-bottom: 8px;
+    font-size: 34px;
+}
+
+.header p {
+    color: #6b7280;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    margin-bottom: 22px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.card h2 {
+    margin-top: 0;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+    font-size: 15px;
+}
+
+.locations {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.location {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background: #f9fafb;
+    border-radius: 7px;
+    font-weight: normal;
+}
+
+.location input {
+    width: 17px;
+    height: 17px;
+}
+
+button {
+    width: 100%;
+    margin-top: 25px;
+    padding: 14px;
+    border: none;
+    border-radius: 7px;
+    background: #2563eb;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+button:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+}
+
+.error {
+    margin-top: 15px;
+    padding: 12px;
+    background: #fee2e2;
+    color: #991b1b;
+    border-radius: 7px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+.stat {
+    padding: 18px;
+    background: #f3f4f6;
+    border-radius: 8px;
+}
+
+.stat strong {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.route {
+    padding: 20px;
+    background: #f9fafb;
+    border-radius: 8px;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.route-node {
+    font-weight: bold;
+}
+
+.arrow {
+    margin: 0 8px;
+    color: #2563eb;
+    font-weight: bold;
+}
+
+.concept-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 18px;
+}
+
+.concept-grid > div {
+    padding: 18px;
+    background: #f9fafb;
+    border-radius: 8px;
+}
+
+.concept-grid h3 {
+    margin-top: 0;
+}
